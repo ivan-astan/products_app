@@ -1,32 +1,33 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import {Product, productsAPI} from "../api/productAPI";
 
-interface Product {
-    id: number;
-    name: string;
-    image: string;
-    liked: boolean;
-    description: string;
-}
+
 
 interface Store {
     products: Product[];
     addProduct: (product: Product) => void;
     toggleLike: (id: number) => void;
     deleteProduct: (id: number) => void;
+    getProducts: () => void;
 }
 
-export const useProductsStore = create<Store>()(
-    persist(
+export const useProductsStore = create<Store>(
         (set) => ({
             products: [],
+            getProducts: async() => {
+
+                    try {
+                        const products = await productsAPI.getProducts();
+                        set((state) => ({products: products}))
+                    } catch (error) {
+                        console.error('Error fetching products:', error);
+                    }
+
+            },
             addProduct: (product) => {
-                set((state) => {
-                    console.log("Текущие продукты:", state.products);
-                    const newProducts = [...state.products, product];
-                    console.log("Новые продукты:", newProducts);
-                    return { products: newProducts };
-                });
+                set((state) => ({
+                    products: [...state.products, product]
+                }));
             },
             toggleLike: (id) => set((state) => ({
                 products: state.products.map((product) =>
@@ -37,9 +38,5 @@ export const useProductsStore = create<Store>()(
                 products: state.products.filter((product) => product.id !== id),
             })),
         }),
-        {
-            name: 'product-storage',
-            storage: createJSONStorage(() => sessionStorage),
-        }
-    )
+
 );

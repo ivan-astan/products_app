@@ -6,18 +6,20 @@ const CreateProduct = () => {
     const addProduct = useProductsStore((state) => state.addProduct);
     const navigate = useNavigate();
 
-    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
     const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
+    const [category, setCategory] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const newProduct = {
             id: Date.now(),
-            name,
+            title,
             image,
             liked: false,
             description,
+            category,
         };
         addProduct(newProduct);
         navigate('/products');
@@ -34,8 +36,8 @@ const CreateProduct = () => {
                         id="productName"
                         className="form-control"
                         placeholder="Введите название продукта"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                     <div className="invalid-feedback">
@@ -65,6 +67,20 @@ const CreateProduct = () => {
                         placeholder="Введите описание"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                    <div className="invalid-feedback">
+                        Пожалуйста, введите описание продукта.
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="productCategory" className="form-label">Категория</label>
+                    <textarea
+                        id="productCategory"
+                        className="form-control"
+                        placeholder="Введите категорию"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         required
                     />
                     <div className="invalid-feedback">

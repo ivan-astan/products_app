@@ -11,13 +11,18 @@ const Product = () => {
     return (
         <div className="container mt-4">
             <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card text-center">
-                        <img src={product.image} alt={product.name} className="card-img-top" />
+                <div className="col-md-6">
+                    <div className="card text-center align-items-center shadow-lg" style={{ borderRadius: '15px' }}>
+                        <img
+                            src={product.image}
+                            style={{ maxHeight: '200px', maxWidth: '200px' }}
+                            alt={product.title}
+                            className="card-img-top img-fluid"
+                        />
                         <div className="card-body">
-                            <h1 className="card-title">{product.name}</h1>
+                            <h1 className="card-title">{product.title}</h1>
                             <p className="card-text">{product.description}</p>
-                            <Link to="/products" className="btn btn-primary">Назад</Link>
+                            <Link to="/products" className="btn btn-primary btn-lg">Назад</Link>
                         </div>
                     </div>
                 </div>
