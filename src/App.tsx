@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter, Route, Routes, Navigate, HashRouter} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import ProductsList from './pages/ProductsList';
 import ProductDetailed from './pages/ProductDetailed';
 import CreateProduct from './pages/CreateProduct';
@@ -12,7 +12,7 @@ function App() {
         getProducts()
     })
   return (
-      <HashRouter>
+      <BrowserRouter basename="/products_app">
         <Routes>
             <Route path="/" element={<Navigate to="/products" />} />
             <Route path="/products" element={<ProductsList />} />
@@ -20,7 +20,7 @@ function App() {
             <Route path="/create-product" element={<CreateProduct />} />
             <Route path="/products/edit/:id" element={<UpdateProduct />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
   );
 }
 
